@@ -3,10 +3,10 @@
     <title>Tea Time Shop</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../static/fontawesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
-    <script src="../static/javascript/jquery.min.js"></script>
-    <script src="../static/javascript/bootstrap.min.js"></script>
+    <link href="static/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/style/bootstrap.min.css">
+    <script src="static/javascript/jquery.min.js"></script>
+    <script src="static/javascript/bootstrap.min.js"></script>
     <script type="text/javascript">
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -32,9 +32,14 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Product</a></li>
                 <li class="active">
-                    <a href="#">Sign in</a>
+                    <a href="add">Add product</a>
+                </li>
+                <li>
+                    <a href="product">Product</a>
+                </li>
+                <li>
+                    <a href="signin">Sign in</a>
                 </li>
             </ul>
         </div>
