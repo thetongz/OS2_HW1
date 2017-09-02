@@ -17,7 +17,7 @@
         <div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Product</a></li>
-                <li><a href="#">Sign in</a></li>
+                <li><a href="views/signin.php">Sign in</a></li>
             </ul>
         </div>
     </div>
