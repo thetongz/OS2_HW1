@@ -1,5 +1,6 @@
 RewriteEngine on
 RewriteRule ^signin$ views/signin.php
+RewriteRule ^signout$ views/signout.php
 RewriteRule ^home$ index.php
 RewriteRule ^product$ views/product.php
 RewriteRule ^add$ views/add-product.php

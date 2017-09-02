@@ -1,4 +1,29 @@
 <html>
+<?php
+    require "../controllers/user.controller.php";
+
+    if(isset($_SESSION['username'])) {
+        redirect("home");
+    }
+
+    function redirect($where) {
+        header("Location: $where");
+        die();
+    }
+
+    function isLoginSuccess($loginStatus) {
+        if($loginStatus) {
+            redirect("home");
+        } else {
+            echo "<script>alert('Username or Password is invalid')</script>";
+        }
+    }
+
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+        $loginStatus = signIn($_POST['username'], $_POST['password']);
+        isLoginSuccess($loginStatus);
+    }
+?>
 <head>
     <title>Tea Time Shop</title>
     <meta charset="utf-8">
@@ -17,9 +42,6 @@
         <div>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="add">Add product</a>
-                </li>
-                <li>
                     <a href="product">Product</a>
                 </li>
                 <li class="active">
@@ -31,18 +53,20 @@
 </nav>
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
-        <h1>Sign in</h1>
-        <p>with your Tea Time Account</p>
-        <div class="form-group">
-            <label class="control-label" for="username">Username</label>
-            <input class="form-control" id="username" type="text" placeholder="username">
-        </div>
+        <form action="" method="POST">
+            <h1>Sign in</h1>
+            <p>with your Tea Time Account</p>
+            <div class="form-group">
+                <label class="control-label" for="username">Username</label>
+                <input name="username" class="form-control" id="username" type="text" placeholder="username">
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="password">Password</label>
-            <input class="form-control" id="password" type="password" placeholder="password">
-        </div>
-        <a href="#" class="btn btn-primary btn-block">Sign in</a>
+            <div class="form-group">
+                <label class="control-label" for="password">Password</label>
+                <input name="password" class="form-control" id="password" type="password" placeholder="password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+        </form>
     </div>
 </div>
 </body>

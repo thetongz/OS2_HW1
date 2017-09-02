@@ -1,4 +1,15 @@
 <html>
+<?php
+    session_start();
+    function redirect($where) {
+        header("Location: $where");
+        die();
+    }
+
+    if(!isset($_SESSION['username'])) {
+        redirect("home");
+    }
+?>
 <head>
     <title>Tea Time Shop</title>
     <meta charset="utf-8">
@@ -28,7 +39,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Tea Time</a>
+            <a class="navbar-brand" href="home">Tea Time</a>
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
@@ -39,7 +50,7 @@
                     <a href="product">Product</a>
                 </li>
                 <li>
-                    <a href="signin">Sign in</a>
+                    <a href="signout">Sign out</a>
                 </li>
             </ul>
         </div>
