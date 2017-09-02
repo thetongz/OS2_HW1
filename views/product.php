@@ -20,19 +20,19 @@ session_start();
         <div>
             <ul class="nav navbar-nav navbar-right">
                 <?php
-                    if(isset($_SESSION['username'])) {
-                        echo '<li><a href="add">Add product</a></li>';
-                    }
+                if (isset($_SESSION['username'])) {
+                    echo '<li><a href="add">Add product</a></li>';
+                }
                 ?>
                 <li class="active">
                     <a href="#">Product</a>
                 </li>
                 <?php
-                    if(!isset($_SESSION['username'])) {
-                        echo '<li><a href="signin">Sign in</a></li>';
-                    } else {
-                        echo '<li><a href="signout">Sign out</a></li>';
-                    }
+                if (!isset($_SESSION['username'])) {
+                    echo '<li><a href="signin">Sign in</a></li>';
+                } else {
+                    echo '<li><a href="signout">Sign out</a></li>';
+                }
                 ?>
             </ul>
         </div>
@@ -67,9 +67,13 @@ session_start();
                 <td>5000</td>
                 <td>50</td>
                 <td>
-                    <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                    &nbsp;
-                    <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo '<i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                    &nbsp;
+                                    <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>';
+                    }
+                    ?>
                 </td>
             </tr>
             </tbody>
