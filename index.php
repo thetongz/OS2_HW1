@@ -12,12 +12,13 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Tea Time</a>
+            <a class="navbar-brand" href="home">Tea Time</a>
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Product</a></li>
-                <li><a href="#">Sign in</a></li>
+                <li><a href="add">Add product</a></li>
+                <li><a href="product">Product</a></li>
+                <li><a href="signin">Sign in</a></li>
             </ul>
         </div>
     </div>
@@ -26,7 +27,7 @@
     <div class="jumbotron">
         <h1>Tea Time <i class="fa fa-coffee" aria-hidden="true"></i></h1>
         <p>A cup of <b><i>TEA</i></b> make everything <b><i>BETTER</i></b></p>
-        <p><a class="btn btn-primary btn-lg">View our product</a></p>
+        <p><a href="product" class="btn btn-primary btn-lg">View our product</a></p>
     </div>
 </div>
 </body>
