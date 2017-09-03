@@ -2,10 +2,12 @@
 require "../configs/database.config.php";
 
     class UserModel {
-        function connectDatabase() {
-            $database = new Database();
+        private $pdo;
 
-            return $database->connect();
+        function __construct()
+        {
+            $database = new Database();
+            $this->pdo = $database->connect();
         }
 
         function hashPassword($password) {
@@ -15,9 +17,8 @@ require "../configs/database.config.php";
         }
 
         function signIn($username, $password) {
-            $pdo = $this->connectDatabase();
             $hashedPassword = $this->hashPassword($password);
-            $stmt = $pdo->prepare('SELECT * FROM user 
+            $stmt = $this->pdo->prepare('SELECT * FROM user 
           WHERE username=:username AND password=:password ');
             $stmt->bindValue(':username', $username);
             $stmt->bindValue(':password', $hashedPassword);
