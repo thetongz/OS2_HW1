@@ -1,14 +1,10 @@
 <html>
 <?php
     require "../controllers/user.controller.php";
+    require "../utilities/redirect.php";
 
     if(isset($_SESSION['username'])) {
         redirect("home");
-    }
-
-    function redirect($where) {
-        header("Location: $where");
-        die();
     }
 
     function isLoginSuccess($loginStatus) {
