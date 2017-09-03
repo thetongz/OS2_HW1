@@ -1,10 +1,15 @@
 <html>
 <?php
 session_start();
+
+require "../controllers/product.controller.php";
+
+$products = getAllProduct();
+
 ?>
 <head>
     <title>Tea Time Shop</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/fontawesome/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="static/style/bootstrap.min.css">
@@ -55,26 +60,28 @@ session_start();
             </thead>
             <tbody>
             <tr>
-                <td>1</td>
-                <td>
-                    <img src="https://i.pinimg.com/736x/38/3a/77/383a77e9505c0a48cffce8ab446ef680--hot-teas-good-ideas.jpg"
-                         alt="" width="160px" height="160px">
-                </td>
-                <td>EXAMPLE</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem ipsum
-                    dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.t
-                </td>
-                <td>5000</td>
-                <td>50</td>
-                <td>
-                    <?php
-                    if (isset($_SESSION['username'])) {
-                        echo '<i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                                    &nbsp;
-                                    <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>';
+                <?php
+                    foreach($products as $product) {
+                        echo '
+                            <td>'. $product["id"]. '</td>
+                            <td>
+                                <img src="'. $product["imageURL"].'" width="160px" height="160px">
+                            </td>
+                            <td>'. $product["name"]. '</td>
+                            <td>'. $product["description"]. '</td>
+                            <td>'. $product["price"]. '</td>
+                            <td>'. $product["amount"]. '</td>
+                            <td>';
+
+                        if (isset($_SESSION['username'])) {
+                            echo '<i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                                        &nbsp;
+                                  <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>';
+                        }
+
+                        echo '</td>';
                     }
-                    ?>
-                </td>
+                ?>
             </tr>
             </tbody>
         </table>
