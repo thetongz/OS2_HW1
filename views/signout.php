@@ -1,6 +1,7 @@
 <?php
+require "../utilities/redirect.utility.php";
+
 session_start();
 session_destroy();
-header("Location: home");
-die();
+redirect("home");
 ?>
