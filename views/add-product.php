@@ -1,13 +1,30 @@
 <html>
 <?php
     session_start();
-    function redirect($where) {
-        header("Location: $where");
-        die();
-    }
+    require "../utilities/redirect.utility.php";
+    require "../controllers/product.controller.php";
 
     if(!isset($_SESSION['username'])) {
         redirect("home");
+    }
+
+    if(isset($_POST['add'])) {
+        $name = $_POST['name'];
+        $imageURL = 'test';
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $amount = $_POST['amount'];
+
+        $isAddComplete = addProduct($name, $imageURL, $description, $price, $amount);
+        handleAddEvent($isAddComplete);
+    }
+
+    function handleAddEvent($isAddComplete) {
+        if($isAddComplete) {
+            redirect("product");
+        } else {
+            echo '<script>alert("Adding product isn\'t complete")</script>';
+        }
     }
 ?>
 <head>
@@ -58,32 +75,34 @@
 </nav>
 <div class="container">
     <div class="col-md-8 col-md-offset-2" id="form">
-        <h1>Add Product</h1>
-        <div class="form-group">
-            <img id="blah" src="#" alt="your image"/>
-            <input type='file' onchange="readURL(this);" />
-        </div>
+        <form action="" method="POST">
+            <h1>Add Product</h1>
+            <div class="form-group">
+                <img id="blah" src="#"/>
+                <input type='file' onchange="readURL(this);" required/>
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="name">Name</label>
-            <input class="form-control" id="name" type="text" placeholder="name">
-        </div>
+            <div class="form-group">
+                <label class="control-label" for="name">Name</label>
+                <input class="form-control" name="name" type="text" placeholder="name" required>
+            </div>
 
-        <div class="form-group">
-            <label for="textArea" class="control-label">Description</label>
-            <textarea class="form-control" rows="3" id="textArea"></textarea>
-        </div>
+            <div class="form-group">
+                <label for="textArea" class="control-label">Description</label>
+                <textarea class="form-control" rows="4" name="description" id="textArea" style="resize:none" required></textarea>
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="price">Price</label>
-            <input class="form-control" id="price" type="text" placeholder="price">
-        </div>
+            <div class="form-group">
+                <label class="control-label" for="price">Price</label>
+                <input class="form-control" id="price" name="price" type="text" placeholder="price" required>
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="amount">Amount</label>
-            <input class="form-control" id="amount" type="text" placeholder="amount">
-        </div>
-        <a href="#" class="btn btn-primary btn-block">Add product</a>
+            <div class="form-group">
+                <label class="control-label" for="amount">Amount</label>
+                <input class="form-control" id="amount" name="amount" type="text" placeholder="amount" required>
+            </div>
+            <button type="submit" name="add" class="btn btn-primary btn-block">Add product</button>
+        </form>
     </div>
 </div>
 </body>

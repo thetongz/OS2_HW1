@@ -25,5 +25,18 @@ class ProductModel {
 
         return $stmt;
     }
+
+    function addProduct($product) {
+        $stmt = $this->pdo->prepare('INSERT INTO product(name, imageURL, description, price, amount) VALUE 
+         (:name, :imageURL, :description, :price, :amount)');
+        $stmt->bindValue(':name', $product["name"]);
+        $stmt->bindValue(':imageURL', $product["imageURL"]);
+        $stmt->bindValue(':description', $product["description"]);
+        $stmt->bindValue(':price', $product["price"]);
+        $stmt->bindValue(':amount', $product["amount"]);
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
 ?>
