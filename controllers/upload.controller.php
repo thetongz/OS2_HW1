@@ -1,6 +1,6 @@
 <?php
 
-$imagePath = "../static/images";
+$imagePath = "static/images";
 
 function uploadImage($name, $tempName) {
     global $imagePath;
