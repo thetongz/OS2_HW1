@@ -1,1 +1,3 @@
 /.idea
+/static/composer.lock
+/static/vendor

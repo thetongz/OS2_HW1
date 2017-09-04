@@ -4,8 +4,7 @@ require "../configs/database.config.php";
     class UserModel {
         private $pdo;
 
-        function __construct()
-        {
+        function __construct() {
             $database = new Database();
             $this->pdo = $database->connect();
         }

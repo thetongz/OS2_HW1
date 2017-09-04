@@ -1,6 +1,5 @@
 <?php
-function redirect($where)
-{
+function redirect($where) {
     header("Location: $where");
     die();
 }

@@ -1,7 +1,7 @@
 <html>
 <?php
     require "../controllers/user.controller.php";
-    require "../utilities/redirect.php";
+    require "../utilities/redirect.utility.php";
 
     if(isset($_SESSION['username'])) {
         redirect("home");
@@ -54,12 +54,12 @@
             <p>with your Tea Time Account</p>
             <div class="form-group">
                 <label class="control-label" for="username">Username</label>
-                <input name="username" class="form-control" id="username" type="text" placeholder="username">
+                <input name="username" class="form-control" id="username" type="text" placeholder="username" required>
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="password">Password</label>
-                <input name="password" class="form-control" id="password" type="password" placeholder="password">
+                <input name="password" class="form-control" id="password" type="password" placeholder="password" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Sign in</button>
         </form>
