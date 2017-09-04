@@ -2,8 +2,7 @@
 session_start();
 require "../models/user.model.php";
 
-function signIn($username, $password)
-{
+function signIn($username, $password) {
     $userModal = new UserModel();
     $result = $userModal->signIn($username, $password);
     $isLoginSuccess = false;

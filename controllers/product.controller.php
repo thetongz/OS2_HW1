@@ -1,8 +1,8 @@
 <?php
 require "../models/product.model.php";
+require "../dataSources/product.dataSource.php";
 
-function getAllProduct()
-{
+function getAllProduct() {
     $productModel = new ProductModel();
     $result = $productModel->getAllProducts();
 
@@ -13,10 +13,14 @@ function deleteProduct($productID) {
     $productModel = new ProductModel();
     $result = $productModel->deleteProduct($productID);
 
-    if($result->rowCount()) {
-        return true;
-    }else{
-        return false;
-    }
+    return $result->rowCount();
+}
+
+function addProduct($name, $imageURL, $description, $price, $amount) {
+    $product = createProductObject($name, $imageURL, $description, $price, $amount);
+    $productModel = new ProductModel();
+    $result = $productModel->addProduct($product);
+
+    return $result;
 }
 ?>
