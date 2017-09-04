@@ -3,7 +3,7 @@
 session_start();
 
 require "../controllers/product.controller.php";
-require "../utilities/redirect.php";
+require "../utilities/redirect.utility.php";
 
 $products = getAllProduct();
 

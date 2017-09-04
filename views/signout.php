@@ -1,5 +1,5 @@
 <?php
-require "../utilities/redirect.php";
+require "../utilities/redirect.utility.php";
 
 session_start();
 session_destroy();
