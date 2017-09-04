@@ -4,14 +4,12 @@ require "../configs/database.config.php";
 class ProductModel {
     private $pdo;
 
-    function __construct()
-    {
+    function __construct() {
         $database = new Database();
         $this->pdo = $database->connect();
     }
 
-    function getAllProducts()
-    {
+    function getAllProducts() {
         $stmt = $this->pdo->prepare('SELECT * FROM product');
         $stmt->execute();
 

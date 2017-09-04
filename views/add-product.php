@@ -8,7 +8,8 @@
         redirect("home");
     }
 
-    if(isset($_POST['add'])) {
+    if(isset($_POST['add']))
+    {
         $name = $_POST['name'];
         $imageURL = 'test';
         $description = $_POST['description'];
