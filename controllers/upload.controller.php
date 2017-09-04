@@ -1,12 +1,13 @@
 <?php
 
-$imagePath = "static/images";
+$uploadImagePath = "../static/images";
+$displayImagePath = "static/images";
 
 function uploadImage($name, $tempName) {
-    global $imagePath;
-    $filePath = "{$imagePath}/{$name}";
-    move_uploaded_file($tempName, $filePath);
+    global $uploadImagePath, $displayImagePath;
+    $tempFilePath = "{$uploadImagePath}/{$name}";
+    move_uploaded_file($tempName, $tempFilePath);
 
-    return $filePath;
+    return "{$displayImagePath}/{$name}";
 }
 ?>
