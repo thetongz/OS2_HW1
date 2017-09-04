@@ -12,10 +12,10 @@
     if(isset($_POST['add']))
     {
         $imageFile = $_FILES['file'];
-        $imageFileKey = uploadImageToS3($imageFile['name'], $imageFile['tmp_name']);
+        $imageFilePath = uploadImage($imageFile['name'], $imageFile['tmp_name']);
 
         $name = $_POST['name'];
-        $imageURL = getUploadedImageURL($imageFileKey);
+        $imageURL = $imageFilePath;
         $description = $_POST['description'];
         $price = $_POST['price'];
         $amount = $_POST['amount'];
