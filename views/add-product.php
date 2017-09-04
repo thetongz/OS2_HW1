@@ -3,6 +3,7 @@
     session_start();
     require "../utilities/redirect.utility.php";
     require "../controllers/product.controller.php";
+    require "../controllers/upload.controller.php";
 
     if(!isset($_SESSION['username'])) {
         redirect("home");
@@ -10,8 +11,11 @@
 
     if(isset($_POST['add']))
     {
+        $imageFile = $_FILES['file'];
+        $imageFileKey = uploadImageToS3($imageFile['name'], $imageFile['tmp_name']);
+
         $name = $_POST['name'];
-        $imageURL = 'test';
+        $imageURL = getUploadedImageURL($imageFileKey);
         $description = $_POST['description'];
         $price = $_POST['price'];
         $amount = $_POST['amount'];
@@ -76,11 +80,11 @@
 </nav>
 <div class="container">
     <div class="col-md-8 col-md-offset-2" id="form">
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             <h1>Add Product</h1>
             <div class="form-group">
                 <img id="blah" src="#"/>
-                <input type='file' onchange="readURL(this);" required/>
+                <input type='file' name="file" accept="image/*" onchange="readURL(this);" required/>
             </div>
 
             <div class="form-group">
