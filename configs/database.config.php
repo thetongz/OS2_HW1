@@ -9,7 +9,10 @@ class Database
 
     function connect()
     {
-        return new PDO('mysql:host=' . $this->serverName . ';dbname=' . $this->databaseName, $this->username, $this->password);
+        $pdo = new PDO('mysql:host=' . $this->serverName . ';dbname=' . $this->databaseName, $this->username, $this->password);
+        $pdo->exec("set names utf8");
+
+        return $pdo;
     }
 }
 ?>
