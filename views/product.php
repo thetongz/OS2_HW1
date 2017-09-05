@@ -8,12 +8,22 @@
     $productController = new ProductController();
     $products = $productController->getAllProducts();
 
+    if(isset($_POST['edit'])) {
+        $productID = getProductID( $_POST['edit']);
+
+        redirect("edit/{$productID}");
+    }
+
     if (isset($_POST['delete'])) {
-        $index = $_POST['delete'];
-        $productID = $products[$index]['id'];
-    
+        $productID = getProductID( $_POST['delete']);
         $deleteStatus = $productController->deleteProduct($productID);
+
         handleDeleteEvent($deleteStatus);
+    }
+
+    function getProductID($index) {
+        global $products;
+        return $products[$index]['id'];;
     }
 
     function handleDeleteEvent($status) {
@@ -87,7 +97,7 @@
                 <?php
                 foreach ($products as $index=>$product) {
                     echo '<tr>
-                            <td>' . $product["id"] . '</td>
+                            <td>' . $index . '</td>
                             <td>
                                 <img src="' . $product["imageURL"] . '" width="160px" height="160px">
                             </td>
