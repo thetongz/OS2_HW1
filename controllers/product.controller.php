@@ -11,6 +11,19 @@ class ProductController {
         $this->productDataSource = new ProductDataSource();
     }
 
+    private function isProductExist($productCount) {
+        return $productCount > 0;
+    }
+
+    function getProductByID($productID) {
+        $result = $this->productModel->getProductByID($productID);
+        if($this->isProductExist($result->rowCount())) {
+            return $result->fetch();
+        }
+
+        return null;
+    }
+
     function getAllProducts() {
         $result = $this->productModel->getAllProducts();
 
