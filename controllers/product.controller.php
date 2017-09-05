@@ -2,25 +2,32 @@
 require "../models/product.model.php";
 require "../dataSources/product.dataSource.php";
 
-function getAllProduct() {
-    $productModel = new ProductModel();
-    $result = $productModel->getAllProducts();
+class ProductController {
+    private $productModel;
+    private $productDataSource;
 
-    return $result->fetchAll(PDO::FETCH_ASSOC);
-}
+    function __construct() {
+        $this->productModel = new ProductModel();
+        $this->productDataSource = new ProductDataSource();
+    }
 
-function deleteProduct($productID) {
-    $productModel = new ProductModel();
-    $result = $productModel->deleteProduct($productID);
+    function getAllProducts() {
+        $result = $this->productModel->getAllProducts();
 
-    return $result->rowCount();
-}
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-function addProduct($name, $imageURL, $description, $price, $amount) {
-    $product = createProductObject($name, $imageURL, $description, $price, $amount);
-    $productModel = new ProductModel();
-    $result = $productModel->addProduct($product);
+    function deleteProduct($productID) {
+        $result = $this->productModel->deleteProduct($productID);
 
-    return $result;
+        return $result->rowCount();
+    }
+
+    function addProduct($name, $imageURL, $description, $price, $amount) {
+        $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
+        $result = $this->productModel->addProduct($product);
+
+        return $result;
+    }
 }
 ?>

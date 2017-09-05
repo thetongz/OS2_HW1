@@ -3,6 +3,8 @@
     require "../controllers/user.controller.php";
     require "../utilities/redirect.utility.php";
 
+    $userController = new UserController();
+
     if(isset($_SESSION['username'])) {
         redirect("home");
     }
@@ -16,7 +18,7 @@
     }
 
     if (isset($_POST['username']) && isset($_POST['password'])) {
-        $loginStatus = signIn($_POST['username'], $_POST['password']);
+        $loginStatus = $userController->signIn($_POST['username'], $_POST['password']);
         isLoginSuccess($loginStatus);
     }
 ?>
