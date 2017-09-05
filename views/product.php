@@ -1,23 +1,28 @@
 <html>
 <?php
-session_start();
+    session_start();
 
-require "../controllers/product.controller.php";
-require "../utilities/redirect.utility.php";
+    require "../controllers/product.controller.php";
+    require "../utilities/redirect.utility.php";
 
-$products = getAllProduct();
+    $productController = new ProductController();
+    $products = $productController->getAllProducts();
 
-if (isset($_POST['delete'])) {
-    $index = $_POST['delete'];
-    $productID = $products[$index]['id'];
-
-    $deleteStatus = deleteProduct($productID);
-    if($deleteStatus == true) {
-        redirect("product");
-    } else {
-        echo '<script>alert("Delete incomplete")</script>';
+    if (isset($_POST['delete'])) {
+        $index = $_POST['delete'];
+        $productID = $products[$index]['id'];
+    
+        $deleteStatus = $productController->deleteProduct($productID);
+        handleDeleteEvent($deleteStatus);
     }
-}
+
+    function handleDeleteEvent($status) {
+        if($status == true) {
+            redirect("product");
+        } else {
+            echo '<script>alert("Delete incomplete")</script>';
+        }
+    }
 
 ?>
 <head>
