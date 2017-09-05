@@ -6,8 +6,8 @@ class ProductDataSource {
             'name' => $name,
             'imageURL' => $imageURL,
             'description' => $description,
-            'price' => $price,
-            'amount' => $amount
+            'price' => intval($price),
+            'amount' => intval($amount)
         ];
     }
 }
