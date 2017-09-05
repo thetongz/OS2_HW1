@@ -4,9 +4,11 @@ require "../dataSources/product.dataSource.php";
 
 class ProductController {
     private $productModel;
+    private $productDataSource;
 
     function __construct() {
         $this->productModel = new ProductModel();
+        $this->productDataSource = new ProductDataSource();
     }
 
     function getAllProducts() {
@@ -22,7 +24,7 @@ class ProductController {
     }
 
     function addProduct($name, $imageURL, $description, $price, $amount) {
-        $product = createProductObject($name, $imageURL, $description, $price, $amount);
+        $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
         $result = $this->productModel->addProduct($product);
 
         return $result;
