@@ -1,13 +1,19 @@
 <?php
 
-$uploadImagePath = "../static/images";
-$displayImagePath = "static/images";
+class UploadController {
+    private $uploadImagePath;
+    private $displayImagePath;
 
-function uploadImage($name, $tempName) {
-    global $uploadImagePath, $displayImagePath;
-    $tempFilePath = "{$uploadImagePath}/{$name}";
-    move_uploaded_file($tempName, $tempFilePath);
+    function __construct() {
+        $this->uploadImagePath = "../static/images";
+        $this->displayImagePath = "static/images";
+    }
 
-    return "{$displayImagePath}/{$name}";
+    function uploadImage($name, $tempName) {
+        $tempFilePath = "{$this->uploadImagePath}/{$name}";
+        move_uploaded_file($tempName, $tempFilePath);
+
+        return "{$this->displayImagePath}/{$name}";
+    }
 }
 ?>
