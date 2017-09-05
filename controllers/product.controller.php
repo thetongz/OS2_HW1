@@ -40,7 +40,14 @@ class ProductController {
         $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
         $result = $this->productModel->addProduct($product);
 
-        return $result;
+        return $result->rowCount();
+    }
+
+    function updateProduct($name, $imageURL, $description, $price, $amount, $productID) {
+        $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
+        $result = $this->productModel->updateProduct($product, $productID);
+
+        return $result->rowCount();
     }
 }
 ?>

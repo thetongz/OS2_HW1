@@ -44,5 +44,19 @@ class ProductModel {
 
         return $stmt;
     }
+
+    function updateProduct($product, $productID) {
+        $stmt = $this->pdo->prepare('UPDATE products SET name=:name, imageURL=:imageURL, 
+                description=:description, amount=:amount, price=:price WHERE id=:id');
+        $stmt->bindValue(':name', $product["name"]);
+        $stmt->bindValue(':imageURL', $product["imageURL"]);
+        $stmt->bindValue(':description', $product["description"]);
+        $stmt->bindValue(':price', $product["price"]);
+        $stmt->bindValue(':amount', $product["amount"]);
+        $stmt->bindValue(':id', $productID);
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
 ?>
