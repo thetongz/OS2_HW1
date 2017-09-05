@@ -17,7 +17,7 @@ require "../configs/database.config.php";
 
         function signIn($username, $password) {
             $hashedPassword = $this->hashPassword($password);
-            $stmt = $this->pdo->prepare('SELECT * FROM user 
+            $stmt = $this->pdo->prepare('SELECT * FROM users 
           WHERE username=:username AND password=:password ');
             $stmt->bindValue(':username', $username);
             $stmt->bindValue(':password', $hashedPassword);

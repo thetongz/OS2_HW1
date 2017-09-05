@@ -5,14 +5,16 @@
     require "../controllers/product.controller.php";
     require "../controllers/upload.controller.php";
 
+    $productController = new ProductController();
+    $uploadController = new UploadController();
+
     if(!isset($_SESSION['username'])) {
         redirect("home");
     }
 
-    if(isset($_POST['add']))
-    {
+    if(isset($_POST['add'])) {
         $imageFile = $_FILES['file'];
-        $imageFilePath = uploadImage($imageFile['name'], $imageFile['tmp_name']);
+        $imageFilePath = $uploadController->uploadImage($imageFile['name'], $imageFile['tmp_name']);
 
         $name = $_POST['name'];
         $imageURL = $imageFilePath;
@@ -20,7 +22,7 @@
         $price = $_POST['price'];
         $amount = $_POST['amount'];
 
-        $isAddComplete = addProduct($name, $imageURL, $description, $price, $amount);
+        $isAddComplete = $productController->addProduct($name, $imageURL, $description, $price, $amount);
         handleAddEvent($isAddComplete);
     }
 

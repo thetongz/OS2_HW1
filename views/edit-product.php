@@ -1,25 +1,88 @@
 <html>
 <?php
-session_start();
+    session_start();
+    require "../controllers/product.controller.php";
+    require "../controllers/upload.controller.php";
+    require "../utilities/redirect.utility.php";
+
+    $productController = new ProductController();
+    $uploadController = new UploadController();
+    $product = null;
+
+    if(!isset($_SESSION['username'])) {
+        redirect("../home");
+    }
+
+    if($_GET['productID']) {
+        $productId = $_GET['productID'];
+        $product = $productController->getProductByID($productId);
+        if($product == null) {
+            redirect("../product");
+        }
+    } else {
+        redirect("../product");
+    }
+
+    if(isset($_POST['edit'])) {
+        $imageFilePath = isFileImageExist($_FILES);
+
+        $name = $_POST['name'];
+        $imageURL = $imageFilePath;
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $amount = $_POST['amount'];
+
+        $isEditComplete = $productController->updateProduct($name, $imageURL, $description, $price, $amount, $product["id"]);
+        handleUpdateEvent($isEditComplete);
+    }
+
+    function isFileImageExist($files) {
+        global $product, $uploadController;
+        if($files["file"]["size"] > 0) {
+            $imageFile = $files["file"];
+            $imageFilePath = $uploadController->uploadImage($imageFile['name'], $imageFile['tmp_name']);
+        } else {
+            $imageFilePath = $product["imageURL"];
+        }
+
+        return $imageFilePath;
+    }
+
+    function handleUpdateEvent($isEditComplete) {
+        if($isEditComplete) {
+            redirect("../product");
+        } else {
+            echo '<script>alert("Updating product isn\'t complete")</script>';
+        }
+    }
+
+
 ?>
 <head>
     <title>Tea Time Shop</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/fontawesome/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="static/style/bootstrap.min.css">
-    <script src="static/javascript/jquery.min.js"></script>
-    <script src="static/javascript/bootstrap.min.js"></script>
+    <link href="../static/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style/bootstrap.min.css">
+    <script src="../static/javascript/jquery.min.js"></script>
+    <script src="../static/javascript/bootstrap.min.js"></script>
+    <style>
+        #previewImage {
+            width: 220px;
+            height: 220px;
+        }
+
+        #form {
+            padding-bottom: 50px;
+        }
+    </style>
     <script type="text/javascript">
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#blah').attr('src', e.target.result);
-                    $('#blah').css('width', '220px');
-                    $('#blah').css('height', '220px');
-                    $('#form').css('padding-bottom', '50px');
+                    $('#previewImage').attr('src', e.target.result);
                 };
 
                 reader.readAsDataURL(input.files[0]);
@@ -36,13 +99,13 @@ session_start();
         <div>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="add">Add product</a>
+                    <a href="../add">Add product</a>
                 </li>
                 <li>
-                    <a href="product">Product</a>
+                    <a href="../product">Product</a>
                 </li>
                 <li>
-                    <a href="signout">Sign out</a>
+                    <a href="../signout">Sign out</a>
                 </li>
             </ul>
         </div>
@@ -50,32 +113,38 @@ session_start();
 </nav>
 <div class="container">
     <div class="col-md-8 col-md-offset-2" id="form">
-        <h1>Add Product</h1>
-        <div class="form-group">
-            <img id="blah" src="#" alt="your image"/>
-            <input type='file' onchange="readURL(this);" />
-        </div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <h1>Edit Product</h1>
+            <div class="form-group">
+                <img id="previewImage" src='<?php echo $product["imageURL"] ?>' alt="your image"/>
+                <input type='file' name="file" accept="image/*" onchange="readURL(this);"/>
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="name">Name</label>
-            <input class="form-control" id="name" type="text" placeholder="name">
-        </div>
+            <div class="form-group">
+                <label class="control-label" for="name">Name</label>
+                <input class="form-control" id="name" name="name" type="text" placeholder="name"
+                       value="<?php echo $product["name"] ?>">
+            </div>
 
-        <div class="form-group">
-            <label for="textArea" class="control-label">Description</label>
-            <textarea class="form-control" rows="3" id="textArea"></textarea>
-        </div>
+            <div class="form-group">
+                <label for="textArea" class="control-label">Description</label>
+                <textarea class="form-control" rows="3" id="textArea" name="description"
+                          style="resize:none"><?php echo $product["description"] ?></textarea>
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="price">Price</label>
-            <input class="form-control" id="price" type="text" placeholder="price">
-        </div>
+            <div class="form-group">
+                <label class="control-label" for="price">Price</label>
+                <input class="form-control" id="price" name="price" type="text" placeholder="price"
+                       value="<?php echo $product["price"] ?>">
+            </div>
 
-        <div class="form-group">
-            <label class="control-label" for="amount">Amount</label>
-            <input class="form-control" id="amount" type="text" placeholder="amount">
-        </div>
-        <a href="#" class="btn btn-primary btn-block">Add product</a>
+            <div class="form-group">
+                <label class="control-label" for="amount">Amount</label>
+                <input class="form-control" id="amount" name="amount" type="text" placeholder="amount"
+                       value="<?php echo $product["amount"] ?>">
+            </div>
+            <button type="submit" name="edit" class="btn btn-primary btn-block">Edit product</button>
+        </form>
     </div>
 </div>
 </body>

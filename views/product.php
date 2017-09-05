@@ -1,23 +1,38 @@
 <html>
 <?php
-session_start();
+    session_start();
 
-require "../controllers/product.controller.php";
-require "../utilities/redirect.utility.php";
+    require "../controllers/product.controller.php";
+    require "../utilities/redirect.utility.php";
 
-$products = getAllProduct();
+    $productController = new ProductController();
+    $products = $productController->getAllProducts();
 
-if (isset($_POST['delete'])) {
-    $index = $_POST['delete'];
-    $productID = $products[$index]['id'];
+    if(isset($_POST['edit'])) {
+        $productID = getProductID( $_POST['edit']);
 
-    $deleteStatus = deleteProduct($productID);
-    if($deleteStatus == true) {
-        redirect("product");
-    } else {
-        echo '<script>alert("Delete incomplete")</script>';
+        redirect("edit/{$productID}");
     }
-}
+
+    if (isset($_POST['delete'])) {
+        $productID = getProductID( $_POST['delete']);
+        $deleteStatus = $productController->deleteProduct($productID);
+
+        handleDeleteEvent($deleteStatus);
+    }
+
+    function getProductID($index) {
+        global $products;
+        return $products[$index]['id'];;
+    }
+
+    function handleDeleteEvent($status) {
+        if($status == true) {
+            redirect("product");
+        } else {
+            echo '<script>alert("Delete incomplete")</script>';
+        }
+    }
 
 ?>
 <head>
@@ -82,7 +97,7 @@ if (isset($_POST['delete'])) {
                 <?php
                 foreach ($products as $index=>$product) {
                     echo '<tr>
-                            <td>' . $product["id"] . '</td>
+                            <td>' . ($index + 1) . '</td>
                             <td>
                                 <img src="' . $product["imageURL"] . '" width="160px" height="160px">
                             </td>
