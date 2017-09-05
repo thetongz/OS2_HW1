@@ -97,7 +97,7 @@
                 <?php
                 foreach ($products as $index=>$product) {
                     echo '<tr>
-                            <td>' . $index . '</td>
+                            <td>' . ($index + 1) . '</td>
                             <td>
                                 <img src="' . $product["imageURL"] . '" width="160px" height="160px">
                             </td>
