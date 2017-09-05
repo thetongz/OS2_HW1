@@ -12,8 +12,7 @@
         redirect("home");
     }
 
-    if(isset($_POST['add']))
-    {
+    if(isset($_POST['add'])) {
         $imageFile = $_FILES['file'];
         $imageFilePath = $uploadController->uploadImage($imageFile['name'], $imageFile['tmp_name']);
 

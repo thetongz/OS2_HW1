@@ -11,6 +11,19 @@ class ProductController {
         $this->productDataSource = new ProductDataSource();
     }
 
+    private function isProductExist($productCount) {
+        return $productCount > 0;
+    }
+
+    function getProductByID($productID) {
+        $result = $this->productModel->getProductByID($productID);
+        if($this->isProductExist($result->rowCount())) {
+            return $result->fetch();
+        }
+
+        return null;
+    }
+
     function getAllProducts() {
         $result = $this->productModel->getAllProducts();
 
@@ -27,7 +40,14 @@ class ProductController {
         $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
         $result = $this->productModel->addProduct($product);
 
-        return $result;
+        return $result->rowCount();
+    }
+
+    function updateProduct($name, $imageURL, $description, $price, $amount, $productID) {
+        $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
+        $result = $this->productModel->updateProduct($product, $productID);
+
+        return $result->rowCount();
     }
 }
 ?>
