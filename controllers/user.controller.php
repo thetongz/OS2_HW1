@@ -2,16 +2,29 @@
 session_start();
 require "../models/user.model.php";
 
-function signIn($username, $password) {
-    $userModal = new UserModel();
-    $result = $userModal->signIn($username, $password);
-    $isLoginSuccess = false;
-    foreach ($result->fetchAll(PDO::FETCH_ASSOC) as $row) {
-        $isLoginSuccess = true;
-        $_SESSION["username"] = $row["username"];
+class UserController {
+    private $userModel;
+
+    function __construct() {
+        $this->userModel = new UserModel();
     }
 
-    return $isLoginSuccess;
-}
+    function signIn($username, $password) {
+        $result = $this->userModel->signIn($username, $password);
+        $loginStatus = $this->isSignInComplete($result->rowCount());
+        if($loginStatus) {
+            $this->storeUserInSession($result->fetch());
+        }
 
+        return $loginStatus;
+    }
+
+    function isSignInComplete($count) {
+        return $count > 0;
+    }
+
+    function storeUserInSession($userData) {
+        $_SESSION["username"] = $userData["username"];
+    }
+}
 ?>
