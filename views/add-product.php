@@ -1,12 +1,13 @@
 <html>
 <?php
     session_start();
-    require "../utilities/redirect.utility.php";
+    require "../utilities/handler.utility.php";
     require "../controllers/product.controller.php";
     require "../controllers/upload.controller.php";
 
     $productController = new ProductController();
     $uploadController = new UploadController();
+    $eventHandle = new Handler();
 
     if(!isset($_SESSION['username'])) {
         redirect("home");
@@ -23,15 +24,7 @@
         $amount = $_POST['amount'];
 
         $isAddComplete = $productController->addProduct($name, $imageURL, $description, $price, $amount);
-        handleAddEvent($isAddComplete);
-    }
-
-    function handleAddEvent($isAddComplete) {
-        if($isAddComplete) {
-            redirect("product");
-        } else {
-            echo '<script>alert("Adding product isn\'t complete")</script>';
-        }
+        $eventHandle->handleAddEvent($isAddComplete);
     }
 ?>
 <head>
@@ -48,9 +41,9 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#blah').attr('src', e.target.result);
-                    $('#blah').css('width', '220px');
-                    $('#blah').css('height', '220px');
+                    $('#previewImage').attr('src', e.target.result);
+                    $('#previewImage').css('width', '220px');
+                    $('#previewImage').css('height', '220px');
                     $('#form').css('padding-bottom', '50px');
                 };
 
@@ -85,7 +78,7 @@
         <form action="" method="POST" enctype="multipart/form-data">
             <h1>Add Product</h1>
             <div class="form-group">
-                <img id="blah" src="#"/>
+                <img id="previewImage" src="#"/>
                 <input type='file' name="file" accept="image/*" onchange="readURL(this);" required/>
             </div>
 

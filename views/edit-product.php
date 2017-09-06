@@ -3,10 +3,11 @@
     session_start();
     require "../controllers/product.controller.php";
     require "../controllers/upload.controller.php";
-    require "../utilities/redirect.utility.php";
+    require "../utilities/handler.utility.php";
 
     $productController = new ProductController();
     $uploadController = new UploadController();
+    $eventHandle = new Handler();
     $product = null;
 
     if(!isset($_SESSION['username'])) {
@@ -24,23 +25,21 @@
     }
 
     if(isset($_POST['edit'])) {
-        $imageFilePath = isFileImageExist($_FILES);
-
         $name = $_POST['name'];
-        $imageURL = $imageFilePath;
+        $imageURL = findImagePath($_FILES["file"]);
         $description = $_POST['description'];
         $price = $_POST['price'];
         $amount = $_POST['amount'];
 
         $isEditComplete = $productController->updateProduct($name, $imageURL, $description, $price, $amount, $product["id"]);
-        handleUpdateEvent($isEditComplete);
+        $eventHandle->handleUpdateEvent($isEditComplete);
     }
 
-    function isFileImageExist($files) {
+    function findImagePath($file) {
         global $product, $uploadController;
-        if($files["file"]["size"] > 0) {
-            $imageFile = $files["file"];
-            $imageFilePath = $uploadController->uploadImage($imageFile['name'], $imageFile['tmp_name']);
+        if(isFileExist($file)) {
+            removeOldFile($product["imageURL"]);
+            $imageFilePath = $uploadController->uploadImage($file['name'], $file['tmp_name']);
         } else {
             $imageFilePath = $product["imageURL"];
         }
@@ -48,15 +47,14 @@
         return $imageFilePath;
     }
 
-    function handleUpdateEvent($isEditComplete) {
-        if($isEditComplete) {
-            redirect("../product");
-        } else {
-            echo '<script>alert("Updating product isn\'t complete")</script>';
-        }
+    function isFileExist($file) {
+
+        return $file["size"] > 0;
     }
 
-
+    function removeOldFile($URL) {
+        unlink("../". $URL);
+    }
 ?>
 <head>
     <title>Tea Time Shop</title>
@@ -94,7 +92,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="home">Tea Time</a>
+            <a class="navbar-brand" href="../home">Tea Time</a>
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
@@ -116,7 +114,7 @@
         <form action="" method="POST" enctype="multipart/form-data">
             <h1>Edit Product</h1>
             <div class="form-group">
-                <img id="previewImage" src='<?php echo $product["imageURL"] ?>' alt="your image"/>
+                <img id="previewImage" src='<?php echo "../". $product["imageURL"] ?>' alt="your image"/>
                 <input type='file' name="file" accept="image/*" onchange="readURL(this);"/>
             </div>
 
