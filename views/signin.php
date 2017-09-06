@@ -1,12 +1,14 @@
 <html>
 <?php
+    session_start();
     require "../controllers/user.controller.php";
     require "../utilities/handler.utility.php";
+    require "../utilities/auth.utility.php";
 
     $userController = new UserController();
     $eventHandle = new Handler();
 
-    if(isset($_SESSION['username'])) {
+    if(isSignIn()) {
         redirect("home");
     }
 
