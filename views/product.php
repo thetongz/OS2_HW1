@@ -24,7 +24,7 @@
 
     function getProductID($index) {
         global $products;
-        return $products[$index]['id'];;
+        return $products[$index]['id'];
     }
 ?>
 <head>
