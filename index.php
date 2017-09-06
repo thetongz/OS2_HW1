@@ -1,6 +1,7 @@
 <html>
 <?php
     session_start();
+    require "utilities/auth.utility.php";
 ?>
 <head>
     <title>Tea Time Shop</title>
@@ -19,19 +20,15 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <?php
-                    if(isset($_SESSION['username'])) {
-                        echo '<li><a href="add">Add product</a></li>';
-                    }
-                ?>
+                <?php if(isSignIn()) { ?>
+                        <li><a href="add">Add product</a></li>
+                <?php } ?>
                 <li><a href="product">Product</a></li>
-                <?php
-                    if(!isset($_SESSION['username'])) {
-                        echo '<li><a href="signin">Sign in</a></li>';
-                    } else {
-                        echo '<li><a href="signout">Sign out</a></li>';
-                    }
-                ?>
+                <?php if(isSignIn()) { ?>
+                    <li><a href="signout">Sign out</a></li>
+                <?php } else { ?>
+                    <li><a href="signin">Sign in</a></li>
+                <?php } ?>
             </ul>
         </div>
     </div>

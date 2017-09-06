@@ -41,9 +41,9 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#blah').attr('src', e.target.result);
-                    $('#blah').css('width', '220px');
-                    $('#blah').css('height', '220px');
+                    $('#previewImage').attr('src', e.target.result);
+                    $('#previewImage').css('width', '220px');
+                    $('#previewImage').css('height', '220px');
                     $('#form').css('padding-bottom', '50px');
                 };
 
@@ -78,7 +78,7 @@
         <form action="" method="POST" enctype="multipart/form-data">
             <h1>Add Product</h1>
             <div class="form-group">
-                <img id="blah" src="#"/>
+                <img id="previewImage" src="#"/>
                 <input type='file' name="file" accept="image/*" onchange="readURL(this);" required/>
             </div>
 

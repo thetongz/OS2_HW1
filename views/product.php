@@ -1,7 +1,7 @@
 <html>
 <?php
     session_start();
-
+    require "../utilities/auth.utility.php";
     require "../controllers/product.controller.php";
     require "../utilities/handler.utility.php";
 
@@ -24,7 +24,7 @@
 
     function getProductID($index) {
         global $products;
-        return $products[$index]['id'];;
+        return $products[$index]['id'];
     }
 ?>
 <head>
@@ -50,28 +50,24 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <?php
-                if (isset($_SESSION['username'])) {
-                    echo '<li><a href="add">Add product</a></li>';
-                }
-                ?>
+                <?php if(isSignIn()) {?>
+                    <li><a href="add">Add product</a></li>
+                <?php } ?>
                 <li class="active">
                     <a href="product">Product</a>
                 </li>
-                <?php
-                if (!isset($_SESSION['username'])) {
-                    echo '<li><a href="signin">Sign in</a></li>';
-                } else {
-                    echo '<li><a href="signout">Sign out</a></li>';
-                }
-                ?>
+                <?php if(isSignIn()) { ?>
+                    <li><a href="signout">Sign out</a></li>
+                <?php } else { ?>
+                    <li><a href="signin">Sign in</a></li>
+                <?php } ?>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <div>
-        <h1><?php echo count($products) . " products available" ?></h1>
+        <h1><?php echo count($products) ?> products available</h1>
         <table class="table table-striped table-hover ">
             <thead>
             <tr>
@@ -85,21 +81,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <?php
-                foreach ($products as $index=>$product) {
-                    echo '<tr>
-                            <td>' . ($index + 1) . '</td>
-                            <td>
-                                <img src="' . $product["imageURL"] . '" width="160px" height="160px">
-                            </td>
-                            <td>' . $product["name"] . '</td>
-                            <td>' . $product["description"] . '</td>
-                            <td>' . $product["price"] . '</td>
-                            <td>' . $product["amount"] . '</td>
-                            <td>';
-
-                    if (isset($_SESSION['username'])) { ?>
+            <?php foreach ($products as $index=>$product) { ?>
+                <tr>
+                    <td><?php echo ($index + 1) ?></td>
+                    <td>
+                        <img src="<?php echo $product["imageURL"] ?>" width="160px" height="160px">
+                    </td>
+                    <td><?php echo $product["name"] ?></td>
+                    <td><?php echo $product["description"] ?></td>
+                    <td>฿ <?php echo number_format($product["price"],2) ?></td>
+                    <td><?php echo number_format($product["amount"]) ?></td>
+                    <td>
+                        <?php if(isset($_SESSION['username'])) { ?>
                         <form method="POST" action=''>
                             <div>
                                 <button type="submit" name="edit"
@@ -113,12 +106,10 @@
                                 </button>
                             </div>
                         </form>
-                    <?php }
-
-                    echo '</td></<tr>';
-                }
-                ?>
-            </tr>
+                    <?php } ?>
+                    </td>
+                </tr>
+            <?php } ?>
             </tbody>
         </table>
     </div>
