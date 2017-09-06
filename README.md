@@ -7,7 +7,7 @@ Features
 > - add product to inventory
 > - delete product from inventory
 > - list product from inventory
-> - edit product (WIP)
+> - edit product
 
-Operation System 2 Homework1
+Operation System 2 Homework1  
 created by TheTonG
