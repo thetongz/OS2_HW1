@@ -1,4 +1,5 @@
 <?php
+
 require "../configs/database.config.php";
 
 class ProductModel {
