@@ -1,7 +1,7 @@
 <?php
-function redirect($where) {
-    header("Location: $where");
+
+function redirect($destination) {
+    header("Location: $destination");
     die();
 }
-
 ?>

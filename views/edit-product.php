@@ -3,10 +3,11 @@
     session_start();
     require "../controllers/product.controller.php";
     require "../controllers/upload.controller.php";
-    require "../utilities/redirect.utility.php";
+    require "../utilities/handler.utility.php";
 
     $productController = new ProductController();
     $uploadController = new UploadController();
+    $eventHandle = new Handler();
     $product = null;
 
     if(!isset($_SESSION['username'])) {
@@ -33,7 +34,7 @@
         $amount = $_POST['amount'];
 
         $isEditComplete = $productController->updateProduct($name, $imageURL, $description, $price, $amount, $product["id"]);
-        handleUpdateEvent($isEditComplete);
+        $eventHandle->handleUpdateEvent($isEditComplete);
     }
 
     function isFileImageExist($files) {
@@ -47,16 +48,6 @@
 
         return $imageFilePath;
     }
-
-    function handleUpdateEvent($isEditComplete) {
-        if($isEditComplete) {
-            redirect("../product");
-        } else {
-            echo '<script>alert("Updating product isn\'t complete")</script>';
-        }
-    }
-
-
 ?>
 <head>
     <title>Tea Time Shop</title>
@@ -94,7 +85,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="home">Tea Time</a>
+            <a class="navbar-brand" href="../home">Tea Time</a>
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
