@@ -89,8 +89,8 @@
                     </td>
                     <td><?php echo $product["name"] ?></td>
                     <td><?php echo $product["description"] ?></td>
-                    <td><?php echo $product["price"] ?></td>
-                    <td><?php echo $product["amount"] ?></td>
+                    <td>฿ <?php echo number_format($product["price"],2) ?></td>
+                    <td><?php echo number_format($product["amount"]) ?></td>
                     <td>
                         <?php if(isset($_SESSION['username'])) { ?>
                         <form method="POST" action=''>
