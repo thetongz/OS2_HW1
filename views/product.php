@@ -3,9 +3,10 @@
     session_start();
 
     require "../controllers/product.controller.php";
-    require "../utilities/redirect.utility.php";
+    require "../utilities/handler.utility.php";
 
     $productController = new ProductController();
+    $eventHandle = new Handler();
     $products = $productController->getAllProducts();
 
     if(isset($_POST['edit'])) {
@@ -16,24 +17,15 @@
 
     if (isset($_POST['delete'])) {
         $productID = getProductID( $_POST['delete']);
-        $deleteStatus = $productController->deleteProduct($productID);
+        $isDeleteComplete = $productController->deleteProduct($productID);
 
-        handleDeleteEvent($deleteStatus);
+        $eventHandle->handleDeleteEvent($isDeleteComplete);
     }
 
     function getProductID($index) {
         global $products;
         return $products[$index]['id'];;
     }
-
-    function handleDeleteEvent($status) {
-        if($status == true) {
-            redirect("product");
-        } else {
-            echo '<script>alert("Delete incomplete")</script>';
-        }
-    }
-
 ?>
 <head>
     <title>Tea Time Shop</title>
