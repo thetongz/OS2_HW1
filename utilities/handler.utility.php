@@ -17,5 +17,19 @@ class Handler {
 
         $this->handleEvent($status, $destinationIfSuccess, $errorMessage);
     }
+
+    function handleUpdateEvent($status) {
+        $destinationIfSuccess = "../product";
+        $errorMessage = "Updating product isn\'t complete";
+
+        $this->handleEvent($status, $destinationIfSuccess, $errorMessage);
+    }
+
+    function handleDeleteEvent($status) {
+        $destinationIfSuccess = "product";
+        $errorMessage = "Delet product isn\'t complete";
+
+        $this->handleEvent($status, $destinationIfSuccess, $errorMessage);
+    }
 }
 ?>
