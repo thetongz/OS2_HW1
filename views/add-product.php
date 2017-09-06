@@ -1,12 +1,13 @@
 <html>
 <?php
     session_start();
-    require "../utilities/redirect.utility.php";
+    require "../utilities/handler.utility.php";
     require "../controllers/product.controller.php";
     require "../controllers/upload.controller.php";
 
     $productController = new ProductController();
     $uploadController = new UploadController();
+    $eventHandle = new Handler();
 
     if(!isset($_SESSION['username'])) {
         redirect("home");
@@ -23,15 +24,7 @@
         $amount = $_POST['amount'];
 
         $isAddComplete = $productController->addProduct($name, $imageURL, $description, $price, $amount);
-        handleAddEvent($isAddComplete);
-    }
-
-    function handleAddEvent($isAddComplete) {
-        if($isAddComplete) {
-            redirect("product");
-        } else {
-            echo '<script>alert("Adding product isn\'t complete")</script>';
-        }
+        $eventHandle->handleAddEvent($isAddComplete);
     }
 ?>
 <head>
