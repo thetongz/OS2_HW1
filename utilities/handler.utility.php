@@ -27,7 +27,14 @@ class Handler {
 
     function handleDeleteEvent($status) {
         $destinationIfSuccess = "product";
-        $errorMessage = "Delet product isn\'t complete";
+        $errorMessage = "Deleting product isn\'t complete";
+
+        $this->handleEvent($status, $destinationIfSuccess, $errorMessage);
+    }
+
+    function handleSignInEvent($status) {
+        $destinationIfSuccess = "home";
+        $errorMessage = "Username or Password is incorrect";
 
         $this->handleEvent($status, $destinationIfSuccess, $errorMessage);
     }

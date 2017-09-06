@@ -1,25 +1,21 @@
 <html>
 <?php
     require "../controllers/user.controller.php";
-    require "../utilities/redirect.utility.php";
+    require "../utilities/handler.utility.php";
 
     $userController = new UserController();
+    $eventHandle = new Handler();
 
     if(isset($_SESSION['username'])) {
         redirect("home");
     }
 
-    function isLoginSuccess($loginStatus) {
-        if($loginStatus) {
-            redirect("home");
-        } else {
-            echo "<script>alert('Username or Password is invalid')</script>";
-        }
-    }
+    if (isset($_POST['signIn'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $loginStatus = $userController->signIn($_POST['username'], $_POST['password']);
-        isLoginSuccess($loginStatus);
+        $isSignInComplete = $userController->signIn($username, $password);
+        $eventHandle->handleSignInEvent($isSignInComplete);
     }
 ?>
 <head>
@@ -63,7 +59,7 @@
                 <label class="control-label" for="password">Password</label>
                 <input name="password" class="form-control" id="password" type="password" placeholder="password" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+            <button type="submit" name="signIn" class="btn btn-primary btn-block">Sign in</button>
         </form>
     </div>
 </div>
