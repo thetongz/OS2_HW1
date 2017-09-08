@@ -74,7 +74,7 @@
                 <th width="5%">#</th>
                 <th width="20%">Image</th>
                 <th width="14%">Name</th>
-                <th width="33%">Description</th>
+                <th width="33%">Detail</th>
                 <th width="10%">Price</th>
                 <th width="10%">Amount</th>
                 <th width="8%">Other</th>
@@ -88,7 +88,7 @@
                         <img src="<?php echo $product["imageURL"] ?>" width="160px" height="160px">
                     </td>
                     <td><?php echo $product["name"] ?></td>
-                    <td><?php echo $product["description"] ?></td>
+                    <td><?php echo $product["detail"] ?></td>
                     <td>฿ <?php echo number_format($product["price"],2) ?></td>
                     <td><?php echo number_format($product["amount"]) ?></td>
                     <td>

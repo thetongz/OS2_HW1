@@ -5,7 +5,7 @@ class Database
     private $serverName = 'localhost';
     private $username = 'OS2';
     private $password = '12345678';
-    private $databaseName = 'os2';
+    private $databaseName = 'inventory';
 
     function connect()
     {

@@ -19,11 +19,11 @@
 
         $name = $_POST['name'];
         $imageURL = $imageFilePath;
-        $description = $_POST['description'];
+        $detail = $_POST['detail'];
         $price = $_POST['price'];
         $amount = $_POST['amount'];
 
-        $isAddComplete = $productController->addProduct($name, $imageURL, $description, $price, $amount);
+        $isAddComplete = $productController->addProduct($name, $imageURL, $detail, $price, $amount);
         $eventHandle->handleAddEvent($isAddComplete);
     }
 ?>
@@ -88,8 +88,8 @@
             </div>
 
             <div class="form-group">
-                <label for="textArea" class="control-label">Description</label>
-                <textarea class="form-control" rows="4" name="description" id="textArea" style="resize:none" required></textarea>
+                <label for="textArea" class="control-label">Detail</label>
+                <textarea class="form-control" rows="4" name="detail" id="textArea" style="resize:none" required></textarea>
             </div>
 
             <div class="form-group">

@@ -37,15 +37,15 @@ class ProductController {
         return $result->rowCount();
     }
 
-    function addProduct($name, $imageURL, $description, $price, $amount) {
-        $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
+    function addProduct($name, $imageURL, $detail, $price, $amount) {
+        $product = $this->productDataSource->createProductObject($name, $imageURL, $detail, $price, $amount);
         $result = $this->productModel->addProduct($product);
 
         return $result->rowCount();
     }
 
-    function updateProduct($name, $imageURL, $description, $price, $amount, $productID) {
-        $product = $this->productDataSource->createProductObject($name, $imageURL, $description, $price, $amount);
+    function updateProduct($name, $imageURL, $detail, $price, $amount, $productID) {
+        $product = $this->productDataSource->createProductObject($name, $imageURL, $detail, $price, $amount);
         $result = $this->productModel->updateProduct($product, $productID);
 
         return $result->rowCount();
