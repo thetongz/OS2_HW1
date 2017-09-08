@@ -27,7 +27,7 @@
     if(isset($_POST['edit'])) {
         $name = $_POST['name'];
         $imageURL = findImagePath($_FILES["file"]);
-        $description = $_POST['description'];
+        $detail = $_POST['detail'];
         $price = $_POST['price'];
         $amount = $_POST['amount'];
 
@@ -125,9 +125,9 @@
             </div>
 
             <div class="form-group">
-                <label for="textArea" class="control-label">Description</label>
-                <textarea class="form-control" rows="3" id="textArea" name="description"
-                          style="resize:none"><?php echo $product["description"] ?></textarea>
+                <label for="textArea" class="control-label">Detail</label>
+                <textarea class="form-control" rows="3" id="textArea" name="detail"
+                          style="resize:none"><?php echo $product["detail"] ?></textarea>
             </div>
 
             <div class="form-group">

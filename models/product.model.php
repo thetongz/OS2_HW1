@@ -34,11 +34,11 @@ class ProductModel {
     }
 
     function addProduct($product) {
-        $stmt = $this->pdo->prepare('INSERT INTO products(name, imageURL, description, price, amount) VALUE 
-         (:name, :imageURL, :description, :price, :amount)');
+        $stmt = $this->pdo->prepare('INSERT INTO products(name, imageURL, detail, price, amount) VALUE 
+         (:name, :imageURL, :detail, :price, :amount)');
         $stmt->bindValue(':name', $product["name"]);
         $stmt->bindValue(':imageURL', $product["imageURL"]);
-        $stmt->bindValue(':description', $product["description"]);
+        $stmt->bindValue(':detail', $product["detail"]);
         $stmt->bindValue(':price', $product["price"]);
         $stmt->bindValue(':amount', $product["amount"]);
         $stmt->execute();
@@ -48,10 +48,10 @@ class ProductModel {
 
     function updateProduct($product, $productID) {
         $stmt = $this->pdo->prepare('UPDATE products SET name=:name, imageURL=:imageURL, 
-                description=:description, amount=:amount, price=:price WHERE id=:id');
+                detail=:detail, amount=:amount, price=:price WHERE id=:id');
         $stmt->bindValue(':name', $product["name"]);
         $stmt->bindValue(':imageURL', $product["imageURL"]);
-        $stmt->bindValue(':description', $product["description"]);
+        $stmt->bindValue(':detail', $product["detail"]);
         $stmt->bindValue(':price', $product["price"]);
         $stmt->bindValue(':amount', $product["amount"]);
         $stmt->bindValue(':id', $productID);

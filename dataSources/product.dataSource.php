@@ -1,12 +1,12 @@
 <?php
 
 class ProductDataSource {
-    function createProductObject($name, $imageURL, $description, $price, $amount) {
+    function createProductObject($name, $imageURL, $detail, $price, $amount) {
         return [
             'name' => $name,
             'imageURL' => $imageURL,
-            'description' => $description,
-            'price' => intval($price),
+            'detail' => $detail,
+            'price' => floatval($price),
             'amount' => intval($amount)
         ];
     }
