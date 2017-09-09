@@ -10,9 +10,9 @@
     $products = $productController->getAllProducts();
 
     if(isset($_POST['edit'])) {
-        $productID = getProductID( $_POST['edit']);
+        $product = getProductDetail( $_POST['edit']);
 
-        redirect("edit/{$productID}");
+        redirect("edit/{$product["name"]}_{$product["id"]}");
     }
 
     if (isset($_POST['delete'])) {
@@ -22,9 +22,9 @@
         $eventHandle->handleDeleteEvent($isDeleteComplete);
     }
 
-    function getProductID($index) {
+    function getProductDetail($index) {
         global $products;
-        return $products[$index]['id'];
+        return $products[$index];
     }
 ?>
 <head>
