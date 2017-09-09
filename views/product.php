@@ -16,8 +16,8 @@
     }
 
     if (isset($_POST['delete'])) {
-        $productID = getProductID( $_POST['delete']);
-        $isDeleteComplete = $productController->deleteProduct($productID);
+        $product = getProductDetail($_POST['delete']);
+        $isDeleteComplete = $productController->deleteProduct($product["id"]);
 
         $eventHandle->handleDeleteEvent($isDeleteComplete);
     }
@@ -50,7 +50,7 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <?php if(isSignIn()) {?>
+                <?php if(isSignIn()) { ?>
                     <li><a href="add">Add product</a></li>
                 <?php } ?>
                 <li class="active">
