@@ -2,11 +2,14 @@
 <?php
     session_start();
     require "../utilities/auth.utility.php";
-    require "../controllers/product.controller.php";
     require "../utilities/handler.utility.php";
+    require "../controllers/product.controller.php";
+    require "../controllers/upload.controller.php";
 
     $productController = new ProductController();
+    $uploadController = new UploadController();
     $eventHandle = new Handler();
+
     $products = $productController->getAllProducts();
 
     if(isset($_POST['edit'])) {
@@ -17,6 +20,7 @@
 
     if (isset($_POST['delete'])) {
         $product = getProductDetail($_POST['delete']);
+        $uploadController->removeUploadImage($product["imageURL"]);
         $isDeleteComplete = $productController->deleteProduct($product["id"]);
 
         $eventHandle->handleDeleteEvent($isDeleteComplete);
