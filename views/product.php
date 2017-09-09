@@ -10,21 +10,21 @@
     $products = $productController->getAllProducts();
 
     if(isset($_POST['edit'])) {
-        $productID = getProductID( $_POST['edit']);
+        $product = getProductDetail( $_POST['edit']);
 
-        redirect("edit/{$productID}");
+        redirect("edit/{$product["name"]}_{$product["id"]}");
     }
 
     if (isset($_POST['delete'])) {
-        $productID = getProductID( $_POST['delete']);
-        $isDeleteComplete = $productController->deleteProduct($productID);
+        $product = getProductDetail($_POST['delete']);
+        $isDeleteComplete = $productController->deleteProduct($product["id"]);
 
         $eventHandle->handleDeleteEvent($isDeleteComplete);
     }
 
-    function getProductID($index) {
+    function getProductDetail($index) {
         global $products;
-        return $products[$index]['id'];
+        return $products[$index];
     }
 ?>
 <head>
@@ -50,7 +50,7 @@
         </div>
         <div>
             <ul class="nav navbar-nav navbar-right">
-                <?php if(isSignIn()) {?>
+                <?php if(isSignIn()) { ?>
                     <li><a href="add">Add product</a></li>
                 <?php } ?>
                 <li class="active">

@@ -15,5 +15,9 @@ class UploadController {
 
         return "{$this->displayImagePath}/{$name}";
     }
+
+    function removeUploadImage($path) {
+        unlink("../". $path);
+    }
 }
 ?>

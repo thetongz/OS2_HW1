@@ -4,4 +4,4 @@ RewriteRule ^signout$ views/signout.php
 RewriteRule ^home$ index.php
 RewriteRule ^product$ views/product.php
 RewriteRule ^add$ views/add-product.php
-RewriteRule ^edit/([0-9]+)$ views/edit-product.php?productID=$1
+RewriteRule ^edit/(.*)_([0-9]+)$ views/edit-product.php?name=$1&productID=$2

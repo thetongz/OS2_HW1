@@ -31,14 +31,14 @@
         $price = $_POST['price'];
         $amount = $_POST['amount'];
 
-        $isEditComplete = $productController->updateProduct($name, $imageURL, $description, $price, $amount, $product["id"]);
+        $isEditComplete = $productController->updateProduct($name, $imageURL, $detail, $price, $amount, $product["id"]);
         $eventHandle->handleUpdateEvent($isEditComplete);
     }
 
     function findImagePath($file) {
         global $product, $uploadController;
         if(isFileExist($file)) {
-            removeOldFile($product["imageURL"]);
+            $uploadController->removeUploadImage($product["imageURL"]);
             $imageFilePath = $uploadController->uploadImage($file['name'], $file['tmp_name']);
         } else {
             $imageFilePath = $product["imageURL"];
@@ -50,10 +50,6 @@
     function isFileExist($file) {
 
         return $file["size"] > 0;
-    }
-
-    function removeOldFile($URL) {
-        unlink("../". $URL);
     }
 ?>
 <head>
