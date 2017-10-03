@@ -1,7 +1,6 @@
 <?php
 
-class Database
-{
+class Database {
     private $serverName = 'localhost';
     private $username = 'OS2';
     private $password = '12345678';
