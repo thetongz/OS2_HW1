@@ -20,7 +20,6 @@
 
     if (isset($_POST['delete'])) {
         $product = getProductDetail($_POST['delete']);
-        $uploadController->removeUploadImage($product["imageURL"]);
         $isDeleteComplete = $productController->deleteProduct($product["id"]);
 
         $eventHandle->handleDeleteEvent($isDeleteComplete);
